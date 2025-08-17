@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.validation.Valid;
 import orderapp.dto.ResponseStructure;
 import orderapp.entity.User;
 import orderapp.service.UserService;
@@ -31,7 +32,7 @@ public class UserController {
 	public UserService userService;
 	
 	@PostMapping("/save")
-	public ResponseEntity<ResponseStructure<User>> createUser(@RequestBody User user) {
+	public ResponseEntity<ResponseStructure<User>> createUser(@Valid @RequestBody User user) {
 		User response = userService.createUser(user);
 
 		ResponseStructure<User> apiResponse = new ResponseStructure<>();
@@ -67,7 +68,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/updateUser/{id}")
-	public ResponseEntity<ResponseStructure<User>> updateUser(@PathVariable Integer id,@RequestBody User user)
+	public ResponseEntity<ResponseStructure<User>> updateUser(@PathVariable Integer id,@Valid @RequestBody User user)
 	{
 		User response = userService.updateUser(user, id);
 		ResponseStructure<User> apiResponse = new ResponseStructure<>();

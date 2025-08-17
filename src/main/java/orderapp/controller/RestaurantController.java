@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
 import orderapp.OnlineFoodOrderApplication;
 import orderapp.dto.ResponseStructure;
 import orderapp.entity.Food;
@@ -34,7 +36,7 @@ public class RestaurantController {
 	private RestaurantService restaurantService;
 
 	@PostMapping("/save")
-	public ResponseEntity<ResponseStructure<Restaurant>> createRestaurant(@RequestBody Restaurant restaurant) {
+	public ResponseEntity<ResponseStructure<Restaurant>> createRestaurant(@Valid @RequestBody Restaurant restaurant) {
 		Restaurant response = restaurantService.createRestaurant(restaurant);
 
 		ResponseStructure<Restaurant> apiResponse = new ResponseStructure<>();
@@ -72,7 +74,7 @@ public class RestaurantController {
 
 	@PutMapping("/update/{id}")
 	public ResponseEntity<ResponseStructure<Restaurant>> updateRestaurant(@PathVariable Integer id,
-			@RequestBody Restaurant restaurant) {
+			@Valid @RequestBody Restaurant restaurant) {
 		Restaurant response = restaurantService.upadte(id, restaurant);
 		ResponseStructure<Restaurant> apiResponse = new ResponseStructure<Restaurant>();
 		apiResponse.setData(response);
@@ -90,7 +92,7 @@ public class RestaurantController {
 	}
 	
 	@PutMapping("/addFood/{restaurantId}")
-	public ResponseEntity<ResponseStructure<Restaurant>> addFoodItems(@PathVariable Integer restaurantId,@RequestBody Set<Integer> FoodId)
+	public ResponseEntity<ResponseStructure<Restaurant>> addFoodItems(@PathVariable Integer restaurantId,@Valid @RequestBody Set<Integer> FoodId)
 	{
 		Restaurant response = restaurantService.addFoodItems(restaurantId, FoodId);
 		ResponseStructure<Restaurant> apiResponse = new ResponseStructure<>();

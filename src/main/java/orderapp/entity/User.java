@@ -10,6 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,16 +26,26 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	@NotNull
+	@NotBlank
 	private String name;
+	@NotBlank
+	@NotNull
+	@Pattern(regexp = "^[A-Za-z0-9.%/=-]+@[A-Za-z0-9.-]+\\.[A-za-z]{2,6}$", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Invalid wmail address")
 	private String email;
+	@NotNull
+	@NotBlank
 	private String password;
+	@NotNull
+	@NotBlank
 	private String address;
 	private String gender;
+	@NotNull
 	private Long contactNumber;
 	@Lob
 	private byte[] image;
-	
-	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Order> orders;
 
 }
